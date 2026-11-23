@@ -311,9 +311,13 @@ const W_MINOR = {es:['Menores a mi cargo','Como padre, madre o tutor, acepto est
 
 const KEY='cb-checkin-v4';
 let lang='es', step=0, look='arena';
-const blank = ()=>({hasHealth:'',health:[],healthOther:'',hFt:'',hIn:'',wLb:'',channel:'',booking:'',tour:'',date:new Date().toLocaleDateString('en-CA'),partner:'',shift:'am',name:'',last:'',email:'',lada:'+52',wa:'',country:'',city:'',dob:'',ig:'',fb:'',insurance:'',insName:'',media:'yes',ride:'',level:'',height:'',weight:'',reqs:[],medical:'',hasMinors:false,minors:[],found:'',ref:'',stay:'',days:'',with:'',interests:[],mk:'',w:[],wMinor:false,privacy:false,photo:false,sig:null});
+const mxNow=()=>{const o={};new Intl.DateTimeFormat('en-CA',{timeZone:'America/Cancun',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).forEach(x=>o[x.type]=x.value);return o};
+const todayMX=()=>{const o=mxNow();return `${o.year}-${o.month}-${o.day}`};
+// Horario automático (hora de Playa del Carmen): antes de 1:45 pm = mañana, desde 1:45 pm = tarde
+const autoShift=()=>{const o=mxNow();return (+o.hour)*60+(+o.minute)>=13*60+45?'pm':'am'};
+const blank = ()=>({hasHealth:'',health:[],healthOther:'',hFt:'',hIn:'',wLb:'',channel:'',booking:'',tour:'',date:todayMX(),partner:'',shift:autoShift(),name:'',last:'',email:'',lada:'+52',wa:'',country:'',city:'',dob:'',ig:'',fb:'',insurance:'',insName:'',media:'yes',ride:'',level:'',height:'',weight:'',reqs:[],medical:'',hasMinors:false,minors:[],found:'',ref:'',stay:'',days:'',with:'',interests:[],mk:'',w:[],wMinor:false,privacy:false,photo:false,sig:null});
 let D = blank();
-try{const s=localStorage.getItem(KEY); if(s){const p=JSON.parse(s); if(!p.at||Date.now()-p.at>20*60*1000){localStorage.removeItem(KEY)} else { D=Object.assign(blank(),p.D||{}); lang=p.lang||lang; step=Math.min(p.step||0,5); look=p.look||look;}}}catch(e){}
+try{const s=localStorage.getItem(KEY); if(s){const p=JSON.parse(s); if(!p.at||Date.now()-p.at>20*60*1000){localStorage.removeItem(KEY)} else { D=Object.assign(blank(),p.D||{}); D.shift=autoShift(); lang=p.lang||lang; step=Math.min(p.step||0,5); look=p.look||look;}}}catch(e){}
 look='arena';
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({D:{...D,sig:null},lang,step,look,at:Date.now()}))}catch(e){}};
 const t=k=>T[lang][k];
@@ -333,7 +337,7 @@ const R = {
  
  <p class="foot">${t('foot')}</p>`,
 1:()=>lead(t('s1E'),t('s1H'),t('s1P'))+`<div class="card"><div class="f"><span class="q">${t('codeL')}</span><div class="code" id="bkcode">${bookingCode()}</div><span class="hint">${t('codeH')}</span></div>
- <div class="f" data-f="shift"><span class="q">${t('shift')}<span class="req">*</span></span><div class="chips"><button type="button" class="chip" data-k="shift" data-v="am" data-m="0" aria-pressed="${D.shift==='am'}">${t('am')}</button><button type="button" class="chip" data-k="shift" data-v="pm" data-m="0" aria-pressed="${D.shift==='pm'}">${t('pm')}</button></div><span class="emsg"></span></div>
+ <div class="f" data-f="shift"><span class="q">${t('shift')}</span><div class="code" style="font-size:1rem">${t(D.shift)}</div></div>
  ${field('date',t('date'),{type:'date',req:true})}</div>
  <div class="card">${chipField('channel',t('channel'),false,true)}${field('partner',t('partner'),{hint:t('partnerH'),ph:'Hotel …'})}</div>`,
 2:()=>lead(t('s2E'),t('s2H'),t('s2P'))+`<div class="card"><div class="two">${field('name',t('name'),{req:true,auto:'given-name'})}${field('last',t('last'),{req:true,auto:'family-name'})}</div>${field('email',t('email'),{type:'email',req:true,auto:'email',ph:'tu@correo.com'})}
@@ -382,7 +386,7 @@ function payload(){const r=record(''), c=r.checkins; return {codigo:bookingCode(
  marketing_ok:D.mk==='yes',media_whatsapp:D.media==='yes',fotos_ok:D.photo,privacidad_ok:D.privacy,waiver_version:'1.0',clausulas_aceptadas:D.w.length+(D.wMinor?1:0),firma_png:D.sig,user_agent:navigator.userAgent.slice(0,250)}}
 const healthNote=()=>{ if(D.hasHealth!=='yes')return null; const HS=Object.fromEntries(O.health.map(([k,l])=>[k,l.es])); const parts=D.health.filter(k=>k!=='other').map(k=>HS[k]); if(D.health.includes('other')) parts.push('Otra'+(D.healthOther.trim()?': '+D.healthOther.trim()+(lang!=='es'?' (escrito en '+(lang==='en'?'inglés':'francés')+')':''):'')); return parts.join('; ')||null};
 const refCode=()=>((D.name||'AMIGO').normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,8)||'AMIGO')+'10';
-let mode=location.hash==='#guia'?'guide':'form', G={tour:'hidden-cenote',shift:new Date().getHours()<12?'am':'pm',date:new Date().toLocaleDateString('en-CA')}, PIN='', gRows=null, gErr='', gBusy=false, gTimer=null;
+let mode=location.hash==='#guia'?'guide':'form', G={tour:'hidden-cenote',shift:autoShift(),date:todayMX()}, PIN='', gRows=null, gErr='', gBusy=false, gTimer=null;
 try{PIN=sessionStorage.getItem('cb-pin')||''}catch(e){}
 const gCode=()=>{const x=TOURS.find(x=>x.k===G.tour); const d=G.date.split('-'); return `${x.code}-${G.shift==='pm'?'T':'M'}-${d[2]}${d[1]}${d[0].slice(2)}`};
 const REQ_ES=Object.fromEntries(O.reqs.map(([k,l])=>[k,l.es]));
@@ -483,7 +487,7 @@ function validate(){
 let sending=false;
 document.getElementById('next').addEventListener('click',async()=>{ if(sending||!validate())return;
  if(step===5){ D.sig=sigCanvas.toDataURL('image/png'); const btn=document.getElementById('next'); sending=true; btn.disabled=true; btn.textContent='…';
-  let ok=false, why=''; const body=JSON.stringify(payload()); for(let a=0;a<3&&!ok;a++){ if(a) await new Promise(r=>setTimeout(r,1500*a)); try{const r=await fetch(SB_URL+'/rest/v1/checkins',{method:'POST',headers:{...sbHeaders,'Prefer':'return=minimal'},body}); ok=r.ok; if(!ok){why='HTTP '+r.status+' '+(await r.text()).slice(0,120); if(r.status<500)break}}catch(e){why=String(e&&e.message||e)} }
+  let ok=false, why=''; D.shift=autoShift(); const body=JSON.stringify(payload()); for(let a=0;a<3&&!ok;a++){ if(a) await new Promise(r=>setTimeout(r,1500*a)); try{const r=await fetch(SB_URL+'/rest/v1/checkins',{method:'POST',headers:{...sbHeaders,'Prefer':'return=minimal'},body}); ok=r.ok; if(!ok){why='HTTP '+r.status+' '+(await r.text()).slice(0,120); if(r.status<500)break}}catch(e){why=String(e&&e.message||e)} }
   sending=false; btn.disabled=false; btn.textContent=t('submit');
   if(!ok){let m=view.querySelector('#sendErr'); if(!m){m=document.createElement('div');m.id='sendErr';m.className='flag';view.appendChild(m)} m.textContent=T[lang].sendErr+(why?' ('+why+')':''); m.scrollIntoView({behavior:'smooth',block:'center'}); return}
   try{localStorage.removeItem(KEY)}catch(e){} }
