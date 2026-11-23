@@ -24,6 +24,7 @@
   --bar:#0A2A1F; --shadow:none; color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{min-height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 :root[data-look="selva"] body{background:radial-gradient(120% 60% at 20% 0%,rgba(44,212,196,.22),transparent 60%),radial-gradient(90% 50% at 100% 100%,rgba(255,106,61,.12),transparent 60%),var(--bg);background-attachment:fixed}
@@ -230,7 +231,7 @@ const T = {
   pickTour:'¿Qué tour reservaste?',pickTourH:'Selecciona tu tour',pickLang:'Elige tu idioma',pickLangH:'Para el formulario y tu guía',comboSub:'2 tours en 1',needTour:'Elige tu tour para continuar',
   s1E:'Paso 1',s1H:'Tu reserva',s1P:'Así encontramos tu lugar en la salida de hoy.',shift:'Horario',am:'Mañana',pm:'Tarde',codeL:'Tu número de reserva',codeH:'Se genera con tu tour, horario y fecha',extBk:'Número de reserva de la plataforma',
   channel:'¿Dónde reservaste?',booking:'Número de reserva',bookingH:'Lo encuentras en tu correo o app de confirmación',tour:'Tour',date:'Fecha del tour',partner:'Hotel o agencia que te recomendó',partnerH:'Opcional',
-  s2E:'Paso 2',s2H:'Tus datos',s2P:'Así te contactamos el día del tour.',fb:'Facebook',fbH:'Opcional',
+  s2E:'Paso 2',s2H:'Tus datos',s2P:'',fb:'Facebook',fbH:'Opcional',
   name:'Nombre',last:'Apellido',email:'Correo electrónico',wa:'WhatsApp',country:'País',city:'Ciudad',dob:'Fecha de nacimiento',ig:'Instagram',igH:'Opcional · para etiquetarte en las fotos',
   s3E:'Paso 3',s3H:'Tu seguridad',s3P:'Esto lo ve solo tu guía antes de salir.',
   ride:'¿Sabes andar en bicicleta con confianza?',level:'Tu experiencia en bici',height:'Estatura (cm)',weight:'Peso (kg)',hwH:'Para asignarte la talla correcta de e-bike',
@@ -250,10 +251,10 @@ const T = {
   pickTour:'Which tour did you book?',pickTourH:'Select your tour',pickLang:'Choose your language',pickLangH:'For this form and your guide',comboSub:'2 tours in 1',needTour:'Choose your tour to continue',
   s1E:'Step 1',s1H:'Your booking',s1P:'This is how we find your spot on today\'s ride.',shift:'Time slot',am:'Morning',pm:'Afternoon',codeL:'Your booking number',codeH:'Built from your tour, time slot and date',extBk:'Platform booking number',
   channel:'Where did you book?',booking:'Booking number',bookingH:'Find it in your confirmation email or app',tour:'Tour',date:'Tour date',partner:'Hotel or agency that referred you',partnerH:'Optional',
-  s2E:'Step 2',s2H:'Your details',s2P:'This is how we reach you on tour day.',fb:'Facebook',fbH:'Optional',
+  s2E:'Step 2',s2H:'Your details',s2P:'',fb:'Facebook',fbH:'Optional',
   name:'First name',last:'Last name',email:'Email',wa:'WhatsApp',country:'Country',city:'City',dob:'Date of birth',ig:'Instagram',igH:'Optional · so we can tag you in the photos',
   s3E:'Step 3',s3H:'Your safety',s3P:'Only your guide sees this before the ride.',
-  ride:'Can you ride a bike confidently?',level:'Your cycling experience',height:'Height (cm)',weight:'Weight (kg)',hwH:'So we give you the right e-bike size',
+  ride:'Can you ride a bike confidently?',level:'Your cycling experience',height:'Height (cm)',weight:'Weight (kg)',hFt:'Height (ft)',hIn:'(in)',wLb:'Weight (lb)',hwH:'So we give you the right e-bike size',
   reqs:'I confirm that:',medical:'Any allergy or condition your guide should know?',medicalH:'Optional and confidential',ins:'Do you have travel or medical insurance with you?',insName:'Insurer and policy number',insH:'Optional · helps us get you care faster',insNo:'Cool Bikes does not include accident insurance. We recommend buying travel insurance.',
   minors:'Are you registering someone under 18?',minorsH:'As guardian you sign for them. Each adult does their own check-in.',addMinor:'+ Add minor',minorName:'Minor\'s name',
   flagRide:'Your guide will do a short test ride with you first.',flagReq:'Some requirements are unchecked. Your guide will review them with you.',
@@ -270,10 +271,10 @@ const T = {
   pickTour:'Quel tour avez-vous réservé ?',pickTourH:'Sélectionnez votre tour',pickLang:'Choisissez votre langue',pickLangH:'Pour ce formulaire et votre guide',comboSub:'2 tours en 1',needTour:'Choisissez votre tour pour continuer',
   s1E:'Étape 1',s1H:'Votre réservation',s1P:'Pour retrouver votre place dans la sortie du jour.',shift:'Créneau',am:'Matin',pm:'Après-midi',codeL:'Votre numéro de réservation',codeH:'Créé à partir du tour, du créneau et de la date',extBk:'Numéro de réservation de la plateforme',
   channel:'Où avez-vous réservé ?',booking:'Numéro de réservation',bookingH:'Dans votre e-mail ou application de confirmation',tour:'Tour',date:'Date du tour',partner:'Hôtel ou agence qui vous a recommandé',partnerH:'Facultatif',
-  s2E:'Étape 2',s2H:'Vos coordonnées',s2P:'Pour vous joindre le jour du tour.',fb:'Facebook',fbH:'Facultatif',
+  s2E:'Étape 2',s2H:'Vos coordonnées',s2P:'',fb:'Facebook',fbH:'Facultatif',
   name:'Prénom',last:'Nom',email:'E-mail',wa:'WhatsApp',country:'Pays',city:'Ville',dob:'Date de naissance',ig:'Instagram',igH:'Facultatif · pour vous identifier sur les photos',
   s3E:'Étape 3',s3H:'Votre sécurité',s3P:'Seul votre guide voit ces informations avant le départ.',
-  ride:'Savez-vous faire du vélo avec aisance ?',level:'Votre expérience à vélo',height:'Taille (cm)',weight:'Poids (kg)',hwH:'Pour vous attribuer la bonne taille de vélo',
+  ride:'Savez-vous faire du vélo avec aisance ?',level:'Votre expérience à vélo',height:'Taille (cm)',weight:'Poids (kg)',hFt:'Taille (ft)',hIn:'(in)',wLb:'Poids (lb)',hwH:'Pour vous attribuer la bonne taille de vélo',
   reqs:'Je confirme que :',medical:'Allergie ou condition que votre guide doit connaître ?',medicalH:'Facultatif et confidentiel',ins:'Avez-vous une assurance voyage ou santé ?',insName:'Assureur et numéro de police',insH:'Facultatif · nous aide à vous orienter plus vite',insNo:'Cool Bikes n\'inclut pas d\'assurance accident. Nous vous recommandons une assurance voyage.',
   minors:'Inscrivez-vous un mineur de moins de 18 ans ?',minorsH:'En tant que tuteur, vous signez pour lui. Chaque adulte fait son propre check-in.',addMinor:'+ Ajouter un mineur',minorName:'Nom du mineur',
   flagRide:'Votre guide fera un court essai avec vous avant le départ.',flagReq:'Certaines conditions ne sont pas cochées. Votre guide les vérifiera avec vous.',
@@ -294,7 +295,7 @@ const O = {
  found:[['gmaps','Google Maps'],['instagram','Instagram'],['tiktok','TikTok'],['tripadvisor','TripAdvisor'],['viator','Viator'],['airbnb','Airbnb'],['hotel',{es:'Mi hotel',en:'My hotel',fr:'Mon hôtel'}],['friend',{es:'Amigo o familiar',en:'Friend or family',fr:'Ami ou famille'}],['street',{es:'Caminando por la 5ta',en:'Walking on 5th Ave',fr:'En passant sur la 5e Av.'}],['other',{es:'Otro',en:'Other',fr:'Autre'}]],
  stay:[['hotel',{es:'Hotel',en:'Hotel',fr:'Hôtel'}],['airbnb','Airbnb'],['cruise',{es:'Crucero',en:'Cruise',fr:'Croisière'}],['local',{es:'Vivo aquí',en:'I live here',fr:'J\'habite ici'}]],
  with:[['couple',{es:'Pareja',en:'Partner',fr:'En couple'}],['family',{es:'Familia',en:'Family',fr:'Famille'}],['friends',{es:'Amigos',en:'Friends',fr:'Amis'}],['solo',{es:'Solo',en:'Solo',fr:'Seul'}],['work',{es:'Trabajo',en:'Work',fr:'Travail'}]],
- interests:[['rental',{es:'Rentar e-bike',en:'E-bike rental',fr:'Louer un vélo'}],['photos',{es:'Fotos profesionales',en:'Pro photos',fr:'Photos pro'}],['massage',{es:'Masaje post-tour',en:'Post-tour massage',fr:'Massage après le tour'}],['playa',{es:'Actividades en Playa del Carmen',en:'Things to do in Playa del Carmen',fr:'Activités à Playa del Carmen'}],['tulum',{es:'Actividades en Tulum',en:'Things to do in Tulum',fr:'Activités à Tulum'}],['food',{es:'Consejos gastronómicos',en:'Food recommendations',fr:'Conseils gastronomiques'}]]
+ interests:[['rental',{es:'Rentar e-bike',en:'E-bike rental',fr:'Louer un vélo'}],['playa',{es:'Actividades en Playa del Carmen',en:'Things to do in Playa del Carmen',fr:'Activités à Playa del Carmen'}],['tulum',{es:'Actividades en Tulum',en:'Things to do in Tulum',fr:'Activités à Tulum'}],['food',{es:'Consejos gastronómicos',en:'Food recommendations',fr:'Conseils gastronomiques'}]]
 };
 const W = [
  {es:['Riesgos de la actividad','Entiendo que recorrer en e-bike calles, selva y caminos irregulares implica riesgos como caídas, golpes, calor, insectos, fauna, y que el acceso a cenotes y cavernas tiene riesgos propios.'],en:['Activity risks','I understand that riding an e-bike on streets, jungle and uneven trails involves risks such as falls, impacts, heat, insects and wildlife, and that cenotes and caves carry their own risks.'],fr:['Risques de l\'activité','Je comprends que rouler en vélo électrique en ville, en jungle et sur des chemins irréguliers comporte des risques : chutes, chocs, chaleur, insectes, faune, ainsi que des risques propres aux cénotes et grottes.']},
@@ -309,7 +310,7 @@ const W_MINOR = {es:['Menores a mi cargo','Como padre, madre o tutor, acepto est
 
 const KEY='cb-checkin-v4';
 let lang='es', step=0, look='arena';
-const blank = ()=>({channel:'',booking:'',tour:'',date:new Date().toISOString().slice(0,10),partner:'',shift:'am',name:'',last:'',email:'',lada:'+52',wa:'',country:'',city:'',dob:'',ig:'',fb:'',insurance:'',insName:'',media:'yes',ride:'',level:'',height:'',weight:'',reqs:[],medical:'',hasMinors:false,minors:[],found:'',ref:'',stay:'',days:'',with:'',interests:[],mk:'',w:[],wMinor:false,privacy:false,photo:false,sig:null});
+const blank = ()=>({hFt:'',hIn:'',wLb:'',channel:'',booking:'',tour:'',date:new Date().toLocaleDateString('en-CA'),partner:'',shift:'am',name:'',last:'',email:'',lada:'+52',wa:'',country:'',city:'',dob:'',ig:'',fb:'',insurance:'',insName:'',media:'yes',ride:'',level:'',height:'',weight:'',reqs:[],medical:'',hasMinors:false,minors:[],found:'',ref:'',stay:'',days:'',with:'',interests:[],mk:'',w:[],wMinor:false,privacy:false,photo:false,sig:null});
 let D = blank();
 try{const s=localStorage.getItem(KEY); if(s){const p=JSON.parse(s); D=Object.assign(blank(),p.D||{}); lang=p.lang||lang; step=Math.min(p.step||0,5); look=p.look||look;}}catch(e){}
 look='arena';
@@ -322,7 +323,7 @@ const view=document.getElementById('view');
 function chips(key,multi){return `<div class="chips" role="group">${O[key].map(([v,l])=>{const on=multi?D[key].includes(v):D[key]===v;return `<button type="button" class="chip" data-k="${key}" data-v="${v}" data-m="${multi?1:0}" aria-pressed="${on}">${esc(L(l))}</button>`}).join('')}</div>`}
 function field(id,label,{type='text',req=false,hint='',ph='',auto=''}={}){return `<div class="f" data-f="${id}"><label for="i-${id}">${label}${req?'<span class="req">*</span>':''}</label><input id="i-${id}" type="${type}" data-k="${id}" value="${esc(D[id])}" placeholder="${esc(ph)}" ${auto?`autocomplete="${auto}"`:''} ${type==='number'?'inputmode="numeric"':''}>${hint?`<span class="hint">${hint}</span>`:''}<span class="emsg"></span></div>`}
 function chipField(id,label,multi,req,hint=''){return `<div class="f" data-f="${id}"><span class="q">${label}${req?'<span class="req">*</span>':''}</span>${hint?`<span class="hint">${hint}</span>`:''}${chips(id,multi)}<span class="emsg"></span></div>`}
-function lead(e,h,p){return `<div class="lead"><div class="eyebrow">${e}</div><h2>${h}</h2><p>${p}</p></div>`}
+function lead(e,h,p){return `<div class="lead"><div class="eyebrow">${e}</div><h2>${h}</h2>${p?`<p>${p}</p>`:''}</div>`}
 
 const R = {
 0:()=>`<section class="hero"><div class="eyebrow">${t('wEy')}</div><h2>${t('wH')}</h2><p>${t('wP')}</p></section>
@@ -337,10 +338,10 @@ const R = {
  <div class="card">${chipField('channel',t('channel'),false,true)}${field('partner',t('partner'),{hint:t('partnerH'),ph:'Hotel …'})}</div>`,
 2:()=>lead(t('s2E'),t('s2H'),t('s2P'))+`<div class="card"><div class="two">${field('name',t('name'),{req:true,auto:'given-name'})}${field('last',t('last'),{req:true,auto:'family-name'})}</div>${field('email',t('email'),{type:'email',req:true,auto:'email',ph:'tu@correo.com'})}
  <div class="f" data-f="wa"><label for="i-wa">${t('wa')}<span class="req">*</span></label><div class="tel"><select id="i-lada" data-k="lada" aria-label="Lada">${['+52 MX','+1 US/CA','+33 FR','+34 ES','+44 UK','+49 DE','+39 IT','+54 AR','+57 CO','+55 BR'].map(x=>{const c=x.split(' ')[0];return `<option value="${c}" ${D.lada===c?'selected':''}>${x}</option>`}).join('')}</select><input id="i-wa" type="tel" data-k="wa" value="${esc(D.wa)}" autocomplete="tel-national" placeholder="984 123 4567"></div><span class="emsg"></span></div>
- <div class="two">${field('country',t('country'),{req:true,auto:'country-name'})}${field('city',t('city'),{auto:'address-level2'})}</div>${field('dob',t('dob'),{type:'date',req:true,auto:'bday'})}</div>
+ <div class="two">${field('country',t('country'),{req:true,auto:'country-name'})}${field('city',t('city'),{auto:'address-level2'})}</div></div>
  <div class="card"><div class="two">${field('ig',t('ig'),{hint:t('igH'),ph:'@'})}${field('fb',t('fb'),{hint:t('fbH'),ph:'facebook.com/…'})}</div></div>`,
 3:()=>{const flags=[]; if(D.ride==='no'||D.ride==='some')flags.push(t('flagRide')); const miss=O.reqs.filter(([v])=>!D.reqs.includes(v)).length; if(D.reqs.length&&miss)flags.push(t('flagReq'));
- return lead(t('s3E'),t('s3H'),t('s3P'))+`<div class="card">${chipField('ride',t('ride'),false,true)}${chipField('level',t('level'),false,false)}<div class="two">${field('height',t('height'),{type:'number',ph:'170'})}${field('weight',t('weight'),{type:'number',ph:'70'})}</div><span class="hint" style="margin-top:-8px">${t('hwH')}</span></div>
+ return lead(t('s3E'),t('s3H'),t('s3P'))+`<div class="card">${chipField('ride',t('ride'),false,true)}${chipField('level',t('level'),false,false)}${lang==='es'?`<div class="two">${field('height',t('height'),{type:'number',ph:'170'})}${field('weight',t('weight'),{type:'number',ph:'70'})}</div>`:`<div class="two"><div class="two">${field('hFt',t('hFt'),{type:'number',ph:'5'})}${field('hIn',t('hIn'),{type:'number',ph:'7'})}</div>${field('wLb',t('wLb'),{type:'number',ph:'155'})}</div>`}<span class="hint" style="margin-top:-8px">${t('hwH')}</span></div>
  <div class="card"><div class="f" data-f="reqs"><span class="q">${t('reqs')}</span><div class="checks">${O.reqs.map(([v,l])=>`<label class="ck"><input type="checkbox" data-arr="reqs" value="${v}" ${D.reqs.includes(v)?'checked':''}><span>${esc(L(l))}</span></label>`).join('')}</div></div>
  ${flags.map(f=>`<div class="flag">${f}</div>`).join('')}
  <div class="f" data-f="medical"><label for="i-medical">${t('medical')}</label><textarea id="i-medical" data-k="medical">${esc(D.medical)}</textarea><span class="hint">${t('medicalH')}</span></div>
@@ -348,7 +349,7 @@ const R = {
  <div class="card"><label class="ck" style="padding:0"><input type="checkbox" id="i-hasMinors" data-bool="hasMinors" ${D.hasMinors?'checked':''}><span><b>${t('minors')}</b><small>${t('minorsH')}</small></span></label>
  ${D.hasMinors?`<div id="minors" style="display:flex;flex-direction:column;gap:10px">${D.minors.map((m,i)=>`<div class="minor"><div class="f"><label for="mn${i}">${t('minorName')}</label><input id="mn${i}" type="text" data-mi="${i}" data-mf="name" value="${esc(m.name)}"></div><div class="f"><label for="md${i}">${t('dob')}</label><input id="md${i}" type="date" data-mi="${i}" data-mf="dob" value="${esc(m.dob)}"></div><button type="button" class="icon-btn" data-rm="${i}" aria-label="Quitar">×</button></div>`).join('')}<button type="button" class="link-btn" id="addMinor">${t('addMinor')}</button></div>`:''}</div>`},
 4:()=>lead(t('s4E'),t('s4H'),t('s4P'))+`<div class="card">${chipField('found',t('found'),false,true)}${field('ref',t('ref'),{hint:t('refH'),ph:'ANA10'})}</div>
- <div class="card">${chipField('stay',t('stay'),false,false)}${field('days',t('days'),{type:'number',ph:'4'})}${chipField('with',t('withQ'),false,false)}${chipField('interests',t('interests'),true,false)}</div>
+ <div class="card">${field('days',t('days'),{type:'number',ph:'4'})}${chipField('with',t('withQ'),false,false)}${chipField('interests',t('interests'),true,false)}</div>
  <div class="card"><div class="f" data-f="mk"><span class="q">${t('mk')}<span class="req">*</span></span><div class="chips"><button type="button" class="chip" data-k="mk" data-v="yes" data-m="0" aria-pressed="${D.mk==='yes'}">${t('yes')}</button><button type="button" class="chip" data-k="mk" data-v="no" data-m="0" aria-pressed="${D.mk==='no'}">${t('no')}</button></div><span class="emsg"></span></div></div>
  <div class="card"><div class="f" data-f="media"><span class="q">${t('media')}</span><span class="hint">${t('mediaH')} ${esc(D.lada+' '+D.wa)}</span><div class="chips"><button type="button" class="chip" data-k="media" data-v="yes" data-m="0" aria-pressed="${D.media==='yes'}">${t('yes')}</button><button type="button" class="chip" data-k="media" data-v="no" data-m="0" aria-pressed="${D.media==='no'}">${t('no')}</button></div></div></div>`,
 5:()=>{const cl=[...W]; if(D.hasMinors&&D.minors.length)cl.push(W_MINOR);
@@ -375,7 +376,7 @@ const SB_URL='https://xibzpuouvveuhxbsmkil.supabase.co', SB_KEY='sb_publishable_
 const sbHeaders={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
 function payload(){const r=record(''), c=r.checkins; return {codigo:bookingCode(),tour:D.tour,horario:D.shift==='pm'?'tarde':'manana',fecha:D.date||null,canal:D.channel,partner:D.partner||null,
  nombre:D.name.trim(),apellido:D.last.trim(),email:D.email.trim(),whatsapp:(D.lada+' '+D.wa).trim(),pais:D.country,ciudad:D.city||null,fecha_nac:D.dob||null,idioma:lang,instagram:D.ig||null,facebook:D.fb||null,
- sabe_bici:D.ride,nivel:D.level||null,estatura:D.height?Math.round(+D.height):null,peso:D.weight?Math.round(+D.weight):null,requisitos_ok:D.reqs,requisitos_pendientes:c.requisitos_pendientes,nota_medica:D.medical||null,seguro_viajero:D.insurance||null,
+ sabe_bici:D.ride,nivel:D.level||null,estatura:(D.hFt||D.hIn)?Math.round(((+D.hFt||0)*12+(+D.hIn||0))*2.54):(D.height?Math.round(+D.height):null),peso:D.wLb?Math.round(+D.wLb*0.4536):(D.weight?Math.round(+D.weight):null),requisitos_ok:D.reqs,requisitos_pendientes:c.requisitos_pendientes,nota_medica:D.medical||null,seguro_viajero:D.insurance||null,
  menores:D.hasMinors?D.minors.filter(m=>m.name):[],como_nos_encontro:D.found,referido_por:D.ref||null,codigo_referido:refCode(),hospedaje:D.stay||null,dias_restantes:D.days?Math.round(+D.days):null,viaja_con:D.with||null,intereses:D.interests,
  marketing_ok:D.mk==='yes',media_whatsapp:D.media==='yes',fotos_ok:D.photo,privacidad_ok:D.privacy,waiver_version:'1.0',clausulas_aceptadas:D.w.length+(D.wMinor?1:0),firma_png:D.sig,user_agent:navigator.userAgent.slice(0,250)}}
 const refCode=()=>((D.name||'AMIGO').normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,8)||'AMIGO')+'10';
@@ -468,7 +469,7 @@ function validate(){
  const errs=[]; const need=(id,msg=t('required'))=>{if(!String(D[id]||'').trim()){setErr(id,msg);errs.push(id)}};
  if(step===0){if(!D.tour){view.querySelector('[data-f="tour"]').classList.add('err');errs.push('tour')}}
  if(step===1){need('channel',t('chooseOne'));need('date')}
- if(step===2){['name','last','country','dob'].forEach(k=>need(k)); need('wa'); if(!/^\S+@\S+\.\S+$/.test(D.email)){setErr('email',D.email?t('emailBad'):t('required'));errs.push('email')}}
+ if(step===2){['name','last','country'].forEach(k=>need(k)); need('wa'); if(!/^\S+@\S+\.\S+$/.test(D.email)){setErr('email',D.email?t('emailBad'):t('required'));errs.push('email')}}
  if(step===3){need('ride',t('chooseOne'))}
  if(step===4){need('found',t('chooseOne'));need('mk',t('chooseOne'))}
  if(step===5){view.querySelectorAll('.clause').forEach(c=>{const k=c.dataset.cl; const ok=k==='m'?D.wMinor:D.w.includes(+k); if(!ok){c.classList.add('err');c.querySelector('details').open=true;errs.push('w'+k)}});
@@ -480,9 +481,9 @@ function validate(){
 let sending=false;
 document.getElementById('next').addEventListener('click',async()=>{ if(sending||!validate())return;
  if(step===5){ D.sig=sigCanvas.toDataURL('image/png'); const btn=document.getElementById('next'); sending=true; btn.disabled=true; btn.textContent='…';
-  let ok=false; try{const r=await fetch(SB_URL+'/rest/v1/checkins',{method:'POST',headers:{...sbHeaders,'Prefer':'return=minimal'},body:JSON.stringify(payload())}); ok=r.ok}catch(e){}
+  let ok=false, why=''; const body=JSON.stringify(payload()); for(let a=0;a<3&&!ok;a++){ if(a) await new Promise(r=>setTimeout(r,1500*a)); try{const r=await fetch(SB_URL+'/rest/v1/checkins',{method:'POST',headers:{...sbHeaders,'Prefer':'return=minimal'},body}); ok=r.ok; if(!ok){why='HTTP '+r.status+' '+(await r.text()).slice(0,120); if(r.status<500)break}}catch(e){why=String(e&&e.message||e)} }
   sending=false; btn.disabled=false; btn.textContent=t('submit');
-  if(!ok){let m=view.querySelector('#sendErr'); if(!m){m=document.createElement('div');m.id='sendErr';m.className='flag';view.appendChild(m)} m.textContent=T[lang].sendErr; m.scrollIntoView({behavior:'smooth',block:'center'}); return}
+  if(!ok){let m=view.querySelector('#sendErr'); if(!m){m=document.createElement('div');m.id='sendErr';m.className='flag';view.appendChild(m)} m.textContent=T[lang].sendErr+(why?' ('+why+')':''); m.scrollIntoView({behavior:'smooth',block:'center'}); return}
   try{localStorage.removeItem(KEY)}catch(e){} }
  step=Math.min(step+1,6); render(); window.scrollTo({top:0}); });
 document.getElementById('back').addEventListener('click',()=>{step=Math.max(step-1,0);render();window.scrollTo({top:0})});
