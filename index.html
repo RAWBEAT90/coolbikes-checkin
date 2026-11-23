@@ -330,8 +330,7 @@ const R = {
 0:()=>`<section class="hero"><div class="eyebrow">${t('wEy')}</div><h2>${t('wH')}</h2><p>${t('wP')}</p></section>
  <div class="f" data-f="tour"><div class="sec-q">${t('pickTour')}<span class="req">*</span><small>${t('pickTourH')}</small></div>
  <div class="tours">${TOURS.map(x=>`<button type="button" class="tcard" data-tour="${x.k}" aria-pressed="${D.tour===x.k}">${x.img.length>1?`<span class="im combo">${x.img.map(u=>`<i style="background-image:url(${u})"></i>`).join('')}</span>`:`<span class="im" style="background-image:url(${x.img[0]})"></span>`}<span class="tick" aria-hidden="true"></span><span class="nm">${esc(x.name)}${x.k==='combo'?`<small>${t('comboSub')}</small>`:''}</span></button>`).join('')}</div><span class="emsg">${t('needTour')}</span></div>
- <div class="f"><div class="sec-q">${t('pickLang')}<small>${t('pickLangH')}</small></div>
- <div class="lpick">${[['es','ES','Español'],['en','EN','English'],['fr','FR','Français']].map(([k,c,n])=>`<button type="button" class="lbtn" data-lang="${k}" aria-pressed="${lang===k}"><b>${c}</b><span>${n}</span></button>`).join('')}</div></div>
+ 
  <p class="foot">${t('foot')}</p>`,
 1:()=>lead(t('s1E'),t('s1H'),t('s1P'))+`<div class="card"><div class="f"><span class="q">${t('codeL')}</span><div class="code" id="bkcode">${bookingCode()}</div><span class="hint">${t('codeH')}</span></div>
  <div class="f" data-f="shift"><span class="q">${t('shift')}<span class="req">*</span></span><div class="chips"><button type="button" class="chip" data-k="shift" data-v="am" data-m="0" aria-pressed="${D.shift==='am'}">${t('am')}</button><button type="button" class="chip" data-k="shift" data-v="pm" data-m="0" aria-pressed="${D.shift==='pm'}">${t('pm')}</button></div><span class="emsg"></span></div>
