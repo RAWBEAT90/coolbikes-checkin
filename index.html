@@ -313,9 +313,9 @@ const KEY='cb-checkin-v4';
 let lang='es', step=0, look='arena';
 const blank = ()=>({hasHealth:'',health:[],healthOther:'',hFt:'',hIn:'',wLb:'',channel:'',booking:'',tour:'',date:new Date().toLocaleDateString('en-CA'),partner:'',shift:'am',name:'',last:'',email:'',lada:'+52',wa:'',country:'',city:'',dob:'',ig:'',fb:'',insurance:'',insName:'',media:'yes',ride:'',level:'',height:'',weight:'',reqs:[],medical:'',hasMinors:false,minors:[],found:'',ref:'',stay:'',days:'',with:'',interests:[],mk:'',w:[],wMinor:false,privacy:false,photo:false,sig:null});
 let D = blank();
-try{const s=localStorage.getItem(KEY); if(s){const p=JSON.parse(s); D=Object.assign(blank(),p.D||{}); lang=p.lang||lang; step=Math.min(p.step||0,5); look=p.look||look;}}catch(e){}
+try{const s=localStorage.getItem(KEY); if(s){const p=JSON.parse(s); if(!p.at||Date.now()-p.at>20*60*1000){localStorage.removeItem(KEY)} else { D=Object.assign(blank(),p.D||{}); lang=p.lang||lang; step=Math.min(p.step||0,5); look=p.look||look;}}}catch(e){}
 look='arena';
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({D:{...D,sig:null},lang,step,look}))}catch(e){}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({D:{...D,sig:null},lang,step,look,at:Date.now()}))}catch(e){}};
 const t=k=>T[lang][k];
 const L=v=>typeof v==='string'?v:v[lang];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
