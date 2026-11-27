@@ -386,8 +386,8 @@ function payload(){const r=record(''), c=r.checkins; return {codigo:bookingCode(
  marketing_ok:D.mk==='yes',media_whatsapp:D.media==='yes',fotos_ok:D.photo,privacidad_ok:D.privacy,waiver_version:'1.0',clausulas_aceptadas:D.w.length+(D.wMinor?1:0),firma_png:D.sig,user_agent:navigator.userAgent.slice(0,250)}}
 const healthNote=()=>{ if(D.hasHealth!=='yes')return null; const HS=Object.fromEntries(O.health.map(([k,l])=>[k,l.es])); const parts=D.health.filter(k=>k!=='other').map(k=>HS[k]); if(D.health.includes('other')) parts.push('Otra'+(D.healthOther.trim()?': '+D.healthOther.trim()+(lang!=='es'?' (escrito en '+(lang==='en'?'inglés':'francés')+')':''):'')); return parts.join('; ')||null};
 const refCode=()=>((D.name||'AMIGO').normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,8)||'AMIGO')+'10';
-let mode=location.hash==='#guia'?'guide':'form', G={tour:'hidden-cenote',shift:autoShift(),date:todayMX()}, PIN='', gRows=null, gErr='', gBusy=false, gTimer=null;
-try{PIN=sessionStorage.getItem('cb-pin')||''}catch(e){}
+let mode=location.hash==='#guia'?'guide':'form', G={tour:'hidden-cenote',shift:autoShift(),date:todayMX()}, PIN='open', gRows=null, gErr='', gBusy=false, gTimer=null;
+try{sessionStorage.removeItem('cb-pin')}catch(e){}
 const gCode=()=>{const x=TOURS.find(x=>x.k===G.tour); const d=G.date.split('-'); return `${x.code}-${G.shift==='pm'?'T':'M'}-${d[2]}${d[1]}${d[0].slice(2)}`};
 const REQ_ES=Object.fromEntries(O.reqs.map(([k,l])=>[k,l.es]));
 function flagsOf(r){const f=[];
@@ -399,7 +399,7 @@ function flagsOf(r){const f=[];
  (r.menores||[]).forEach(m=>{const a=m.dob?Math.floor((Date.now()-Date.parse(m.dob))/31557600000):null; f.push(['info','Menor: '+m.name+(a!==null?' ('+a+' años)':'')])});
  return f}
 const sev=f=>f.some(x=>x[0]==='crit')?2:f.some(x=>x[0]==='warn')?1:0;
-async function loadGuide(){ if(!PIN)return; gBusy=true; try{const r=await fetch(SB_URL+'/rest/v1/rpc/guide_summary',{method:'POST',headers:sbHeaders,body:JSON.stringify({p_pin:PIN,p_codigo:gCode()})}); const j=await r.json(); if(!r.ok){gRows=null; gErr=/pin/i.test(j.message||'')?'PIN incorrecto.':/intentos/i.test(j.message||'')?'Demasiados intentos. Espera 15 minutos.':'No se pudo cargar. Revisa tu conexión.'; if(/pin|intentos/i.test(j.message||'')){PIN='';try{sessionStorage.removeItem('cb-pin')}catch(e){}}} else if(Array.isArray(j)&&j[0]&&j[0].error){gRows=null; gErr='PIN incorrecto.'; PIN=''; try{sessionStorage.removeItem('cb-pin')}catch(e){}} else {gRows=j; gErr=''}}catch(e){gErr='No se pudo cargar. Revisa tu conexión.'} gBusy=false; if(mode==='guide')renderGuide()}
+async function loadGuide(){ if(!PIN)return; gBusy=true; try{const r=await fetch(SB_URL+'/rest/v1/rpc/guide_summary_open',{method:'POST',headers:sbHeaders,body:JSON.stringify({p_codigo:gCode()})}); const j=await r.json(); if(!r.ok){gRows=null; gErr=/pin/i.test(j.message||'')?'PIN incorrecto.':/intentos/i.test(j.message||'')?'Demasiados intentos. Espera 15 minutos.':'No se pudo cargar. Revisa tu conexión.'; if(/pin|intentos/i.test(j.message||'')){PIN='';try{sessionStorage.removeItem('cb-pin')}catch(e){}}} else if(Array.isArray(j)&&j[0]&&j[0].error){gRows=null; gErr='PIN incorrecto.'; PIN=''; try{sessionStorage.removeItem('cb-pin')}catch(e){}} else {gRows=j; gErr=''}}catch(e){gErr='No se pudo cargar. Revisa tu conexión.'} gBusy=false; if(mode==='guide')renderGuide()}
 function renderGuide(){
  document.getElementById('prog').hidden=true; document.getElementById('bar').hidden=true;
  if(!PIN){view.innerHTML=`<div class="lead"><div class="eyebrow">Modo guía</div><h2>Acceso del staff</h2><p>Escribe el PIN del equipo para ver el resumen del grupo.</p></div>
