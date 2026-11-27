@@ -341,7 +341,7 @@ const R = {
  ${field('date',t('date'),{type:'date',req:true})}</div>
  <div class="card">${chipField('channel',t('channel'),false,true)}${field('partner',t('partner'),{hint:t('partnerH'),ph:'Hotel …'})}</div>`,
 2:()=>lead(t('s2E'),t('s2H'),t('s2P'))+`<div class="card"><div class="two">${field('name',t('name'),{req:true,auto:'given-name'})}${field('last',t('last'),{req:true,auto:'family-name'})}</div>${field('email',t('email'),{type:'email',req:true,auto:'email',ph:'tu@correo.com'})}
- <div class="f" data-f="wa"><label for="i-wa">${t('wa')}<span class="req">*</span></label><div class="tel"><select id="i-lada" data-k="lada" aria-label="Lada">${['+52 MX','+1 US/CA','+33 FR','+34 ES','+44 UK','+49 DE','+39 IT','+54 AR','+57 CO','+55 BR'].map(x=>{const c=x.split(' ')[0];return `<option value="${c}" ${D.lada===c?'selected':''}>${x}</option>`}).join('')}</select><input id="i-wa" type="tel" data-k="wa" value="${esc(D.wa)}" autocomplete="tel-national" placeholder="984 123 4567"></div><span class="emsg"></span></div>
+ <div class="f" data-f="wa"><label for="i-wa">${t('wa')}</label><div class="tel"><select id="i-lada" data-k="lada" aria-label="Lada">${['+52 MX','+1 US/CA','+33 FR','+34 ES','+44 UK','+49 DE','+39 IT','+54 AR','+57 CO','+55 BR'].map(x=>{const c=x.split(' ')[0];return `<option value="${c}" ${D.lada===c?'selected':''}>${x}</option>`}).join('')}</select><input id="i-wa" type="tel" data-k="wa" value="${esc(D.wa)}" autocomplete="tel-national" placeholder="984 123 4567"></div><span class="emsg"></span></div>
  <div class="two">${field('country',t('country'),{req:true,auto:'country-name'})}${field('city',t('city'),{auto:'address-level2'})}</div></div>
  <div class="card"><div class="two">${field('ig',t('ig'),{hint:t('igH'),ph:'@'})}${field('fb',t('fb'),{hint:t('fbH'),ph:'facebook.com/…'})}</div></div>`,
 3:()=>{const flags=[]; if(D.ride==='no'||D.ride==='some')flags.push(t('flagRide')); const miss=O.reqs.filter(([v])=>!D.reqs.includes(v)).length; if(D.reqs.length&&miss)flags.push(t('flagReq'));
@@ -380,7 +380,7 @@ const NSTEPS=5;
 const SB_URL='https://xibzpuouvveuhxbsmkil.supabase.co', SB_KEY='sb_publishable_imfxa3Su-1ID0V7b0ddqrg_IEiPthk1';
 const sbHeaders={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
 function payload(){const r=record(''), c=r.checkins; return {codigo:bookingCode(),tour:D.tour,horario:D.shift==='pm'?'tarde':'manana',fecha:D.date||null,canal:D.channel,partner:D.partner||null,
- nombre:D.name.trim(),apellido:D.last.trim(),email:D.email.trim(),whatsapp:(D.lada+' '+D.wa).trim(),pais:D.country,ciudad:D.city||null,fecha_nac:D.dob||null,idioma:lang,instagram:D.ig||null,facebook:D.fb||null,
+ nombre:D.name.trim(),apellido:D.last.trim(),email:D.email.trim(),whatsapp:D.wa.trim()?(D.lada+' '+D.wa).trim():null,pais:D.country,ciudad:D.city||null,fecha_nac:D.dob||null,idioma:lang,instagram:D.ig||null,facebook:D.fb||null,
  sabe_bici:D.ride,nivel:D.level||null,estatura:(D.hFt||D.hIn)?Math.round(((+D.hFt||0)*12+(+D.hIn||0))*2.54):(D.height?Math.round(+D.height):null),peso:D.wLb?Math.round(+D.wLb*0.4536):(D.weight?Math.round(+D.weight):null),requisitos_ok:D.reqs,requisitos_pendientes:c.requisitos_pendientes,nota_medica:healthNote(),seguro_viajero:D.insurance||null,
  menores:D.hasMinors?D.minors.filter(m=>m.name):[],como_nos_encontro:D.found,referido_por:D.ref||null,codigo_referido:refCode(),hospedaje:D.stay||null,dias_restantes:D.days?Math.round(+D.days):null,viaja_con:D.with||null,intereses:D.interests,
  marketing_ok:D.mk==='yes',media_whatsapp:D.media==='yes',fotos_ok:D.photo,privacidad_ok:D.privacy,waiver_version:'1.0',clausulas_aceptadas:D.w.length+(D.wMinor?1:0),firma_png:D.sig,user_agent:navigator.userAgent.slice(0,250)}}
@@ -475,7 +475,7 @@ function validate(){
  const errs=[]; const need=(id,msg=t('required'))=>{if(!String(D[id]||'').trim()){setErr(id,msg);errs.push(id)}};
  if(step===0){if(!D.tour){view.querySelector('[data-f="tour"]').classList.add('err');errs.push('tour')}}
  if(step===1){need('channel',t('chooseOne'));need('date')}
- if(step===2){['name','last','country'].forEach(k=>need(k)); need('wa'); if(!/^\S+@\S+\.\S+$/.test(D.email)){setErr('email',D.email?t('emailBad'):t('required'));errs.push('email')}}
+ if(step===2){['name','last','country'].forEach(k=>need(k)); if(!/^\S+@\S+\.\S+$/.test(D.email)){setErr('email',D.email?t('emailBad'):t('required'));errs.push('email')}}
  if(step===3){need('ride',t('chooseOne'));need('hasHealth',t('chooseOne')); if(D.hasHealth==='yes'&&!D.health.length){setErr('health',t('chooseOne'));errs.push('health')}}
  if(step===4){need('found',t('chooseOne'));need('mk',t('chooseOne'))}
  if(step===5){view.querySelectorAll('.clause').forEach(c=>{const k=c.dataset.cl; const ok=k==='m'?D.wMinor:D.w.includes(+k); if(!ok){c.classList.add('err');c.querySelector('details').open=true;errs.push('w'+k)}});
